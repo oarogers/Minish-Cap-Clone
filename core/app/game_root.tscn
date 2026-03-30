@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://core/app/game_root.gd" id="1_game_root_script"]
+[ext_resource type="PackedScene" path="res://core/systems/scene_flow/scene_flow_manager.tscn" id="2_scene_flow_manager_scene"]
+[ext_resource type="PackedScene" path="res://core/systems/input_context/input_context_manager.tscn" id="3_input_context_manager_scene"]
+[ext_resource type="PackedScene" path="res://game/player/player_logic.tscn" id="4_player_logic_scene"]
+[ext_resource type="PackedScene" path="res://core/camera/overhead_camera_rig.tscn" id="5_overhead_camera_scene"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="Environment" id="Environment_default"]
+background_mode = 1
+background_color = Color(0.47, 0.63, 0.75, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.54, 0.58, 0.61, 1)
+ambient_light_sky_contribution = 0.55
+
+[node name="GameRoot" type="Node3D"]
+script = ExtResource("1_game_root_script")
+
+[node name="SceneFlowManager" parent="." instance=ExtResource("2_scene_flow_manager_scene")]
+
+[node name="InputContextManager" parent="." instance=ExtResource("3_input_context_manager_scene")]
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_default")
+
+[node name="SunLight" type="DirectionalLight3D" parent="World"]
+rotation_degrees = Vector3(-55, -42, 0)
+light_energy = 1.35
+shadow_enabled = true
+
+[node name="FloorVisual" type="MeshInstance3D" parent="World"]
+mesh = SubResource("BoxMesh_floor")
+position = Vector3(0, -0.5, 0)
+
+[node name="FloorCollider" type="StaticBody3D" parent="World"]
+position = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/FloorCollider"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Player" parent="World" instance=ExtResource("4_player_logic_scene")]
+position = Vector3(0, 0.6, 0)
+
+[node name="OverheadCameraRig" parent="World" instance=ExtResource("5_overhead_camera_scene")]
+position = Vector3(0, 15, 1)
+min_bounds = Vector2(-22, -22)
+max_bounds = Vector2(22, 22)
