@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://core/app/game_root.gd" id="1_game_root_script"]
 [ext_resource type="PackedScene" path="res://core/systems/scene_flow/scene_flow_manager.tscn" id="2_scene_flow_manager_scene"]
@@ -12,13 +12,6 @@ size = Vector3(60, 1, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
 size = Vector3(60, 1, 60)
 
-[sub_resource type="Environment" id="Environment_default"]
-background_mode = 1
-background_color = Color(0.47, 0.63, 0.75, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.54, 0.58, 0.61, 1)
-ambient_light_sky_contribution = 0.55
-
 [node name="GameRoot" type="Node3D"]
 script = ExtResource("1_game_root_script")
 
@@ -27,14 +20,6 @@ script = ExtResource("1_game_root_script")
 [node name="InputContextManager" parent="." instance=ExtResource("3_input_context_manager_scene")]
 
 [node name="World" type="Node3D" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
-environment = SubResource("Environment_default")
-
-[node name="SunLight" type="DirectionalLight3D" parent="World"]
-rotation_degrees = Vector3(-55, -42, 0)
-light_energy = 1.35
-shadow_enabled = true
 
 [node name="FloorVisual" type="MeshInstance3D" parent="World"]
 mesh = SubResource("BoxMesh_floor")
