@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://game/player/player_logic.tscn" id="1_player_logic_scene"]
+[ext_resource type="PackedScene" path="res://core/camera/overhead_camera_rig.tscn" id="2_overhead_camera_scene"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="Environment" id="Environment_default"]
+background_mode = 1
+background_color = Color(0.47, 0.63, 0.75, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.54, 0.58, 0.61, 1)
+ambient_light_sky_contribution = 0.55
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_default")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -42, 0)
+light_energy = 1.35
+shadow_enabled = true
+
+[node name="FloorVisual" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_floor")
+position = Vector3(0, -0.5, 0)
+
+[node name="FloorCollider" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorCollider"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Player" parent="." instance=ExtResource("1_player_logic_scene")]
+position = Vector3(0, 0.6, 0)
+
+[node name="OverheadCameraRig" parent="." instance=ExtResource("2_overhead_camera_scene")]
+position = Vector3(0, 15, 1)
+min_bounds = Vector2(-22, -22)
+max_bounds = Vector2(22, 22)

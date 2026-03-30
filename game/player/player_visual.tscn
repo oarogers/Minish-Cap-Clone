@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_torso"]
+radius = 0.28
+mid_height = 0.42
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_limb"]
+size = Vector3(0.14, 0.5, 0.14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sword"]
+size = Vector3(0.06, 0.65, 0.06)
+
+[sub_resource type="BoxMesh" id="BoxMesh_shield"]
+size = Vector3(0.3, 0.38, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_boomerang"]
+size = Vector3(0.24, 0.05, 0.14)
+
+[node name="PlayerVisual" type="Node3D"]
+
+[node name="Torso" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_torso")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_head")
+position = Vector3(0, 0.65, 0)
+
+[node name="LeftArm" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_limb")
+position = Vector3(-0.24, 0.25, 0)
+
+[node name="RightArm" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_limb")
+position = Vector3(0.24, 0.25, 0)
+
+[node name="LeftLeg" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_limb")
+position = Vector3(-0.1, -0.35, 0)
+
+[node name="RightLeg" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_limb")
+position = Vector3(0.1, -0.35, 0)
+
+[node name="SwordDrawn" type="Node3D" parent="."]
+position = Vector3(0.36, 0.15, 0.04)
+
+[node name="Blade" type="MeshInstance3D" parent="SwordDrawn"]
+mesh = SubResource("BoxMesh_sword")
+rotation_degrees = Vector3(-10, 0, 0)
+
+[node name="SwordSheathed" type="Node3D" parent="."]
+position = Vector3(-0.22, 0.2, 0.2)
+rotation_degrees = Vector3(60, 15, 20)
+visible = false
+
+[node name="Blade" type="MeshInstance3D" parent="SwordSheathed"]
+mesh = SubResource("BoxMesh_sword")
+
+[node name="ShieldDrawn" type="Node3D" parent="."]
+position = Vector3(-0.36, 0.22, 0.05)
+
+[node name="Guard" type="MeshInstance3D" parent="ShieldDrawn"]
+mesh = SubResource("BoxMesh_shield")
+rotation_degrees = Vector3(0, 0, 10)
+
+[node name="ShieldSheathed" type="Node3D" parent="."]
+position = Vector3(0.0, 0.2, -0.24)
+rotation_degrees = Vector3(0, 0, 90)
+visible = false
+
+[node name="Guard" type="MeshInstance3D" parent="ShieldSheathed"]
+mesh = SubResource("BoxMesh_shield")
+
+[node name="BoomerangHolster" type="Node3D" parent="."]
+position = Vector3(0.0, 0.1, -0.18)
+
+[node name="Boomerang" type="MeshInstance3D" parent="BoomerangHolster"]
+mesh = SubResource("BoxMesh_boomerang")
+rotation_degrees = Vector3(90, 0, 0)
